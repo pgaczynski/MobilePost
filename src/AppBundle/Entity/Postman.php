@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\PostmanInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="postman")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostmanRepository")
  */
-class Postman
+class Postman implements PostmanInterface
 {
     /**
      * @var int

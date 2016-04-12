@@ -40,12 +40,13 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   pdo_sqlite
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
+        path: '%kernel.root_dir%/sqlite.db'
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -68,4 +69,35 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_rest:
+    serializer:
+        serialize_null: true
+    view:
+        view_response_listener: force
+        force_redirects:
+          html: true
+        formats:
+            json: true
+            xml: true
+            rss: false
+        templating_formats:
+            html: true
+        mime_types:
+          json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+          jpg: 'image/jpeg'
+          png: 'image/png'
+    body_listener: true
     param_fetcher_listener: force
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['html','json', 'xml'], fallback_format: html, prefer_extension: true }
+    routing_loader:
+        default_format: ~
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+    disable_csrf_role: ROLE_API
