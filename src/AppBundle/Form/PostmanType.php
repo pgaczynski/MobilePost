@@ -15,11 +15,11 @@ class PostmanType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('first_name')
-            ->add('last_name')
+            ->add('username')
             ->add('phone')
             ->add('email')
             ->add('city')
+            ->add('password')
         ;
     }
     

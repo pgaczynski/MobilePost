@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Model\PostmanInterface;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Postman
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="postman")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostmanRepository")
  */
-class Postman implements PostmanInterface
+class Postman extends BaseUser implements PostmanInterface
 {
     /**
      * @var int
@@ -20,21 +21,8 @@ class Postman implements PostmanInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255)
-     */
-    private $first_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=255)
-     */
-    private $last_name;
 
     /**
      * @var string
@@ -43,12 +31,6 @@ class Postman implements PostmanInterface
      */
     private $phone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
 
     /**
      * @var string
@@ -66,54 +48,6 @@ class Postman implements PostmanInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return Postman
-     */
-    public function setFirstName($firstName)
-    {
-        $this->first_name = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     *
-     * @return Postman
-     */
-    public function setLastName($lastName)
-    {
-        $this->last_name = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
     }
 
     /**
@@ -138,30 +72,6 @@ class Postman implements PostmanInterface
     public function getPhone()
     {
         return $this->phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return Postman
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**

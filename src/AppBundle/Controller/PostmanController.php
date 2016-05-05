@@ -16,19 +16,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostmanController extends FOSRestController
 {
-    public function getPostmansAction($id)
+    public function getPostmenAction($id)
     {
         return $this->getDoctrine()->getRepository('AppBundle:Postman')
             ->find($id);
     }
 
-    public function getPostmanAction()
+    public function getPostmensAction()
     {
         return $this->getDoctrine()->getRepository('AppBundle:Postman')
             ->findAll();
     }
 
-    public function postPostmanAction(Request $request)
+    public function postPostmenAction(Request $request)
     {
         try {
             $newPostman = $this->container->get('app.postman_form.handler')
@@ -39,14 +39,14 @@ class PostmanController extends FOSRestController
                 'id' => $newPostman->getId(),
                 '_format' => $request->get('_format')
             );
-            return $this->routeRedirectView('api_1_get_postman', $routeOptions,
+            return $this->routeRedirectView('api_1_get_postmen', $routeOptions,
                 Response::HTTP_CREATED);
         } catch (InvalidFormException $exception) {
             return array('form' => $exception->getForm());
         }
     }
 
-    public function putPostmanAction(Request $request, $id)
+    public function putPostmenAction(Request $request, $id)
     {
         try {
             $postman = $this->getDoctrine()->getRepository('AppBundle:Postman')
@@ -71,7 +71,7 @@ class PostmanController extends FOSRestController
                 '_format' => $request->get('_format')
             );
             return $this->routeRedirectView(
-                'api_1_get_postman',
+                'api_1_get_postmen',
                 $routeOptions,
                 $statusCode
             );
@@ -80,7 +80,7 @@ class PostmanController extends FOSRestController
         }
     }
 
-    public function deletePostmanAction(Request $request, $id)
+    public function deletePostmenAction(Request $request, $id)
     {
         $postman = $this->getDoctrine()
             ->getRepository('AppBundle:Postman')->find($id);

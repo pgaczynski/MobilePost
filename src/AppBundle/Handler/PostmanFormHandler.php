@@ -8,6 +8,8 @@ use AppBundle\Model\PostmanInterface;
 use AppBundle\Form\PostmanType;
 use AppBundle\Exception\InvalidFormException;
 use AppBundle\Handler\PostmanFormHandlerInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PostmanFormHandler implements PostmanFormHandlerInterface
 {
@@ -47,7 +49,36 @@ class PostmanFormHandler implements PostmanFormHandlerInterface
             $this->repository->save($postman);
             return $postman;
         }
-        throw new InvalidFormException('Invalid submitted data', $form);
+        $errors = $this->getErrorsFromForm($form);
+        $data = array(
+            'type' => 'validation_error',
+            'title' => 'There was a validation error.',
+            'errors' => $errors,
+        );
+        $response = new JsonResponse($data, 400);
+        throw new InvalidFormException($response, $form);
+    }
+
+    private function getErrorsFromForm(FormInterface $form)
+    {
+        $errors = array();
+        foreach($form->getErrors() as $error)
+        {
+            $errors[] = $error->getMessage();
+        }
+
+        foreach($form->all() as $childForm)
+        {
+            if($childForm instanceof FormInterface)
+            {
+                if($childErrors = $this->getErrorsFromForm($childForm))
+                {
+                    $errors[$childForm->getName()] = $childErrors;
+                }
+            }
+        }
+
+        return $errors;
     }
 
     private function createPostman()
