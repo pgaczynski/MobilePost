@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\PostmanTaskInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="postman_task")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PostmanTaskRepository")
  */
-class PostmanTask
+class PostmanTask implements PostmanTaskInterface
 {
     /**
       * @ORM\OneToOne(targetEntity="Postman", inversedBy="postmanTasks")
