@@ -8,10 +8,8 @@ Interface ParcelOrderInterface
 	public function getPostalCode();
 	public function setStreet($street);
 	public function getStreet();
-	public function setFirstName($firstName);
-	public function getFirstName();
-	public function setLastName($lastName);
-	public function getLastName();
+	public function setUsername($username);
+	public function getUsername();
 	public function setPhone($phone);
 	public function getPhone();
 	public function setEmail($email);
